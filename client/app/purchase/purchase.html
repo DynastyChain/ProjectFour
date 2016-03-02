@@ -14,19 +14,29 @@
     </div>
   </div>
 </div>
-<h3>Total Amount Spent This Year:  ${{vm.total}}</h3>
-<h3 ng-if='vm.month === "january"'>Spent in January:  ${{vm.jan}}</h3>
-<h3 ng-if='vm.month === "february"'>Spent in February:  ${{vm.feb}}</h3>
-<h3 ng-if='vm.month === "march"'>Spent in March:  ${{vm.mar}}</h3>
-<h3 ng-if='vm.month === "april"'>Spent in April:  ${{vm.apr}}</h3>
-<h3 ng-if='vm.month === "may"'>Spent in May:  ${{vm.may}}</h3>
-<h3 ng-if='vm.month === "june"'>Spent in June:  ${{vm.jun}}</h3>
-<h3 ng-if='vm.month === "july"'>Spent in July:  ${{vm.jul}}</h3>
-<h3 ng-if='vm.month === "august"'>Spent in August:  ${{vm.aug}}</h3>
-<h3 ng-if='vm.month === "september"'>Spent in September:  ${{vm.sep}}</h3>
-<h3 ng-if='vm.month === "october"'>Spent in October:  ${{vm.oct}}</h3>
-<h3 ng-if='vm.month === "november"'>Spent in November:  ${{vm.nov}}</h3>
-<h3 ng-if='vm.month === "december"'>Spent in December:  ${{vm.dec}}</h3>
+
+<div class='budgetBox'>
+  <h3>Total Amount Spent This Year:  ${{vm.total}}</h3>
+  <h3>Monthly Budget:  ${{vm.budget}}</h3>
+  <div ng-if='vm.month === "january"'>
+    <h3>Spent in January:  ${{vm.jan.spent}}</h3>
+    <h3>household:  {{vm.catTotals[0].household}}</h3>
+
+  </div>
+  <h3 ng-if='vm.month === "february"'>Spent in February:  ${{vm.feb.spent}}</h3>
+  <h3 ng-if='vm.month === "march"'>Spent in March:  ${{vm.mar.spent}}</h3>
+  <h3 ng-if='vm.month === "april"'>Spent in April:  ${{vm.apr.spent}}</h3>
+  <h3 ng-if='vm.month === "may"'>Spent in May:  ${{vm.may.spent}}</h3>
+  <h3 ng-if='vm.month === "june"'>Spent in June:  ${{vm.jun.spent}}</h3>
+  <h3 ng-if='vm.month === "july"'>Spent in July:  ${{vm.jul.spent}}</h3>
+  <h3 ng-if='vm.month === "august"'>Spent in August:  ${{vm.aug.spent}}</h3>
+  <h3 ng-if='vm.month === "september"'>Spent in September:  ${{vm.sep.spent}}</h3>
+  <h3 ng-if='vm.month === "october"'>Spent in October:  ${{vm.oct.spent}}</h3>
+  <h3 ng-if='vm.month === "november"'>Spent in November:  ${{vm.nov.spent}}</h3>
+  <h3 ng-if='vm.month === "december"'>Spent in December:  ${{vm.dec.spent}}</h3>
+  <h3 ng-if='vm.category === household'>Spent on Household:  ${{vm.catTotals[0].household}}</h3>
+</div>
+
 </div>
 
 <div class='col-md-4'>
@@ -61,6 +71,8 @@
    <option value='misc'>Miscellaneous</option>
   </select><br><br>
 
+<!-- <label for='monthlyBudget'>Monthly Budget: </label>
+<input type='number' ng-model='vm.budget' name='monthlyBudget'><button class='btn btn-success'>Set</button><br><br> -->
 <button ng-click='vm.showForm()' class='btn btn-primary'>Add New Entry</button><br><br>
 
 <form name="newForm" ng-if='vm.count % 2 === 0' ng-submit='vm.addPurchase()'>New Entry

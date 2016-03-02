@@ -34,7 +34,10 @@
             {{ vm.errors.email }}
           </p>
         </div>
-
+        <div class='form-group'>
+          <label for='monthlyBudget'>Monthly Budget</label>
+          <input type='number' name='monthlyBudget' class='form-control' ng-model='vm.user.budget' ng-pattern='/[1-9]\d*/'>
+        </div>
         <div class="form-group" ng-class="{ 'has-success': form.password.$valid && vm.submitted,
                                             'has-error': form.password.$invalid && vm.submitted }">
           <label>Password</label>

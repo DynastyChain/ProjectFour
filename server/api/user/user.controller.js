@@ -19,6 +19,8 @@ function handleError(res, statusCode) {
   };
 }
 
+
+
 /**
  * Get list of users
  * restriction: 'admin'

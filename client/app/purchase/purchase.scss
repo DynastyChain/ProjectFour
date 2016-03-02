@@ -23,3 +23,11 @@ form {
   border-radius: 10px;
   background: -webkit-linear-gradient(white, lightgray);
 }
+.budgetBox {
+  height: 150px;
+  background: -webkit-linear-gradient(right, blue, lightblue);
+  border-radius: 10px;
+  box-shadow: 10px 5px 5px gray;
+  color: white;
+  overflow-y: scroll;
+}

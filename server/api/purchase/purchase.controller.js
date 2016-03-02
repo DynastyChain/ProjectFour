@@ -78,6 +78,7 @@ export function show(req, res) {
 export function create(req, res) {
   var purchase = new Purchase(req.body)
   purchase.owner = req.user._id
+  purchase.budget = req.user.budget
   purchase.save()
     .then(respondWithResult(res, 201))
     .catch(handleError(res));

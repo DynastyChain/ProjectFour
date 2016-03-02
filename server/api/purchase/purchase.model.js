@@ -7,6 +7,7 @@ var PurchaseSchema = new mongoose.Schema({
   amount: Number,
   category: String,
   month: String,
+  budget: Number,
   owner: String
 });
 
