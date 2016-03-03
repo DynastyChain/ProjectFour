@@ -1,3 +1,4 @@
+(function() {
 'use strict';
 
 angular.module('projectFourApp')
@@ -20,7 +21,7 @@ angular.module('projectFourApp')
      {name: 'misc', total: 0}
       ]
     vm.month = {name: 'january', total: 0}
-    vm.count = 2
+    vm.count = 1
 
     vm.initialCategoryTotals = initialCategoryTotals
     vm.updateCategoryTotals = updateCategoryTotals
@@ -29,7 +30,9 @@ angular.module('projectFourApp')
     vm.showForm = showForm
     vm.addPurchase = addPurchase
     vm.deletePurchase = deletePurchase
+    vm.buildChart = buildChart
     getPurchases();
+
 
     function getPurchases() {
       $http
@@ -39,9 +42,10 @@ angular.module('projectFourApp')
             vm.all = response.data
             vm.sortPurchases(vm.all)
             vm.budget = vm.all[0].budget
-            vm.all.forEach(function(item) {
+            vm.sorted.forEach(function(item) {
               vm.initialCategoryTotals(item)
             })
+            buildChart();
          }
       })
     }
@@ -114,6 +118,7 @@ angular.module('projectFourApp')
         vm.month.total -= item.amount
         var index = vm.sorted.indexOf(item)
         vm.sorted.splice(index, 1)
+        buildChart();
         }
     }
 
@@ -128,8 +133,7 @@ angular.module('projectFourApp')
       vm.sorted.push(vm.newPurchase)
       vm.month.total += vm.newPurchase.amount
       vm.initialCategoryTotals(vm.newPurchase)
-
-
+      buildChart();
         $http
           .post('http://localhost:9000/api/purchases', vm.newPurchase)
         .then(function() {
@@ -144,7 +148,65 @@ angular.module('projectFourApp')
       .then(function() {
         console.log(purchase)
       })
+   }
 
+   function buildChart() {
+    $('.chart').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Category Totals vs Total Spent'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Categories',
+                colorByPoint: true,
+                data: [{
+                    name: 'Household',
+                    y: vm.catTotals[0].total
+                }, {
+                    name: 'Rent/Util',
+                    y: vm.catTotals[4].total,
+                    sliced: true,
+                    selected: true
+                }, {
+                    name: 'Personal',
+                    y: vm.catTotals[2].total
+                }, {
+                    name: 'Loans',
+                    y: vm.catTotals[3].total
+                }, {
+                    name: 'Car',
+                    y: vm.catTotals[1].total
+                }, {
+                    name: 'Food',
+                    y: vm.catTotals[5].total
+                }, {
+                    name: 'Medical',
+                    y: vm.catTotals[6].total
+                }, {
+                    name: 'Miscellaneous',
+                    y: vm.catTotals[7].total
+                }]
+            }]
+        });
    }
 
   })
+})()

@@ -1,0 +1,81 @@
+<div class='container'>
+<div class="col-md-4">
+<div id='purchaseBox'><h2><u style='color: white;'>Purchases</u></h2>
+  <div ng-repeat='item in vm.sorted'>
+     <div ng-if='item.category === vm.category || vm.category === "all"'>
+      <h3 class='purch'>
+        Store:  {{item.store}}<br><br>
+        Amount:  {{item.amount}} dollars<br><br>
+        Category:  {{item.category}}
+        <br><br><br>
+      </h3>
+        <button ng-click='vm.updateCategoryTotals(item)' class='btn btn-danger'>Delete</button>
+     </div>
+  </div>
+</div>
+
+<div class='budgetBox'>
+  <h3 ng-if='vm.budget > 0'>Monthly Budget:  ${{vm.budget}}</h3>
+  <h3>Spent this month:  ${{vm.month.total}}</h3>
+  <h3 ng-if='vm.catTotals[0].total > 0'>Spent in Household  ${{vm.catTotals[0].total}}</h3>
+  <h3 ng-if='vm.catTotals[1].total > 0'>Spent on Car  ${{vm.catTotals[1].total}}</h3>
+  <h3 ng-if='vm.catTotals[2].total > 0'>Spent in Personal  ${{vm.catTotals[2].total}}</h3>
+  <h3 ng-if='vm.catTotals[3].total > 0'>Spent in Loans  ${{vm.catTotals[3].total}}</h3>
+  <h3 ng-if='vm.catTotals[4].total > 0'>Spent in Rent/Util  ${{vm.catTotals[4].total}}</h3>
+  <h3 ng-if='vm.catTotals[5].total > 0'>Spent in Food  ${{vm.catTotals[5].total}}</h3>
+  <h3 ng-if='vm.catTotals[6].total > 0'>Spent in Medical  ${{vm.catTotals[6].total}}</h3>
+  <h3 ng-if='vm.catTotals[7].total > 0'>Spent in Miscellaneous  ${{vm.catTotals[7].total}}</h3>
+
+</div>
+</div>
+
+<div class='col-md-4'>
+<h2>July 2016</h2>
+
+<label for='category'>Filter by category</label>
+  <select name='category' ng-model='vm.category'>
+   <option value='all' selected="selected">All</option>
+   <option value='household'>Household</option>
+   <option value='car'>Car</option>
+   <option value='personal'>Personal</option>
+   <option value='loans'>Loans</option>
+   <option value='rent/util'>Rent/Util</option>
+   <option value='food'>Food</option>
+   <option value='medical'>Medical</option>
+   <option value='misc'>Miscellaneous</option>
+  </select><br><br>
+
+<!-- <label for='monthlyBudget'>Monthly Budget: </label>
+<input type='number' ng-model='vm.budget' name='monthlyBudget'><button class='btn btn-success'>Set</button><br><br> -->
+<button ng-click='vm.showForm()' class='btn btn-primary'>Add New Entry</button><br><br>
+
+<form name="newForm" ng-if='vm.count % 2 === 0' ng-submit='vm.addPurchase()'>New Entry
+  <div class='form-group'>
+    <input type='text' name='store' placeholder='place of purchase' ng-model='vm.newPurchase.store' required>
+  </div>
+  <div class='form-group'>
+    <input type='number' name='amount' placeholder='amount in dollars' ng-model='vm.newPurchase.amount' ng-pattern='/[1-9]\d*/'required>
+  </div>
+
+  <div class='form-group'>
+  <select name="category" ng-model='vm.newPurchase.category' placeholder='Category' required>
+      <option value='' disabled selected>Category</option>
+      <option value='household'>Household</option>
+      <option value='car'>Car</option>
+      <option value='personal'>Personal</option>
+      <option value='loans'>Loans</option>
+      <option value='rent/util'>Rent/Util</option>
+      <option value='food'>Food</option>
+      <option value='medical'>Medical</option>
+      <option value='misc'>Miscellaneous</option>
+  </select>
+  </div>
+  <div class='form-group'>
+    <input type='submit' class='btn btn-success'></button>
+  </div>
+</form>
+</div>
+<div class='col-md-4'>
+<div class='chart'></div>
+</div>
+</div>

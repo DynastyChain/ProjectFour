@@ -5,7 +5,7 @@ angular.module('projectFourApp')
     $stateProvider
       .state('purchase', {
         url: '/purchase',
-        templateUrl: 'app/purchase/purchase.html',
+        templateUrl: 'app/main/main.html',
         controller: 'PurchaseCtrl',
         controllerAs: 'vm'
       })
