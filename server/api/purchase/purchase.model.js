@@ -8,6 +8,7 @@ var PurchaseSchema = new mongoose.Schema({
   category: String,
   month: String,
   budget: Number,
+  date: String,
   owner: String
 });
 

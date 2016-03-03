@@ -117,6 +117,7 @@ export function me(req, res, next) {
     .catch(err => next(err));
 }
 
+
 /**
  * Authentication callback
  */

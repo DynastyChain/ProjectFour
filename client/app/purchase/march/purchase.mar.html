@@ -1,11 +1,12 @@
 <div class='container'>
-<div class="col-md-4">
+<div class="col-md-2">
 <div id='purchaseBox'><h2><u style='color: white;'>Purchases</u></h2>
   <div ng-repeat='item in vm.sorted'>
      <div ng-if='item.category === vm.category || vm.category === "all"'>
       <h3 class='purch'>
-        Store:  {{item.store}}<br><br>
-        Amount:  {{item.amount}} dollars<br><br>
+          {{item.store}}<br><br>
+          {{item.amount | currency}}<br><br>
+          {{item.date}}<br><br>
         Category:  {{item.category}}
         <br><br><br>
       </h3>
@@ -13,21 +14,24 @@
      </div>
   </div>
 </div>
+</div>
 
-<div class='budgetBox'>
-  <h3 ng-if='vm.budget > 0'>Monthly Budget:  ${{vm.budget}}</h3>
-  <h3>Spent this month:  ${{vm.month.total}}</h3>
-  <h3 ng-if='vm.catTotals[0].total > 0'>Spent in Household  ${{vm.catTotals[0].total}}</h3>
-  <h3 ng-if='vm.catTotals[1].total > 0'>Spent on Car  ${{vm.catTotals[1].total}}</h3>
-  <h3 ng-if='vm.catTotals[2].total > 0'>Spent in Personal  ${{vm.catTotals[2].total}}</h3>
-  <h3 ng-if='vm.catTotals[3].total > 0'>Spent in Loans  ${{vm.catTotals[3].total}}</h3>
-  <h3 ng-if='vm.catTotals[4].total > 0'>Spent in Rent/Util  ${{vm.catTotals[4].total}}</h3>
-  <h3 ng-if='vm.catTotals[5].total > 0'>Spent in Food  ${{vm.catTotals[5].total}}</h3>
-  <h3 ng-if='vm.catTotals[6].total > 0'>Spent in Medical  ${{vm.catTotals[6].total}}</h3>
-  <h3 ng-if='vm.catTotals[7].total > 0'>Spent in Miscellaneous  ${{vm.catTotals[7].total}}</h3>
-
+<div class='col-md-2'>
+  <div class='budgetBox'>
+  <h2><u>Summary</u></h2>
+  <h3 ng-if='vm.budget > 0'>Monthly Budget:  {{vm.budget | currency}}</h3>
+  <h3>Spent this month:  {{vm.month.total | currency}}</h3>
+  <h3 ng-if='vm.catTotals[0].total > 0'>Spent in Household  {{vm.catTotals[0].total | currency}}</h3>
+  <h3 ng-if='vm.catTotals[1].total > 0'>Spent on Car  {{vm.catTotals[1].total | currency}}</h3>
+  <h3 ng-if='vm.catTotals[2].total > 0'>Spent in Personal  {{vm.catTotals[2].total | currency}}</h3>
+  <h3 ng-if='vm.catTotals[3].total > 0'>Spent in Loans  {{vm.catTotals[3].total | currency}}</h3>
+  <h3 ng-if='vm.catTotals[4].total > 0'>Spent in Rent/Util  {{vm.catTotals[4].total | currency}}</h3>
+  <h3 ng-if='vm.catTotals[5].total > 0'>Spent in Food  {{vm.catTotals[5].total | currency}}</h3>
+  <h3 ng-if='vm.catTotals[6].total > 0'>Spent in Medical  {{vm.catTotals[6].total | currency}}</h3>
+  <h3 ng-if='vm.catTotals[7].total > 0'>Spent in Misc  {{vm.catTotals[7].total | currency}}</h3>
 </div>
 </div>
+
 
 <div class='col-md-4'>
 <h2>March 2016</h2>
@@ -51,10 +55,13 @@
 
 <form name="newForm" ng-if='vm.count % 2 === 0' ng-submit='vm.addPurchase()'>New Entry
   <div class='form-group'>
-    <input type='text' name='store' placeholder='place of purchase' ng-model='vm.newPurchase.store' required>
+    <input type='text' name='store' placeholder='item or service name' ng-model='vm.newPurchase.store' required>
   </div>
   <div class='form-group'>
     <input type='number' name='amount' placeholder='amount in dollars' ng-model='vm.newPurchase.amount' ng-pattern='/[1-9]\d*/'required>
+  </div>
+  <div class='form-group'>
+    <input type='text' name='date' placeholder='date' ng-model='vm.newPurchase.date'>
   </div>
 
   <div class='form-group'>
@@ -77,5 +84,7 @@
 </div>
 <div class='col-md-4'>
 <div class='chart'></div>
+<h1 ng-if='vm.remain > 0'>Remaining Monthly Funds  {{vm.remain | currency}}</h1>
+
 </div>
 </div>
