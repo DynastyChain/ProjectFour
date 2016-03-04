@@ -4,13 +4,13 @@
   <div ng-repeat='item in vm.sorted'>
      <div ng-if='item.category === vm.category || vm.category === "all"'>
       <h3 class='purch'>
-          {{item.store}}<br><br>
-          {{item.amount | currency}}<br><br>
-          {{item.date}}<br><br>
-        Category:  {{item.category}}
-        <br><br><br>
+          {{item.store}}<br>
+          {{item.amount | currency}}<br>
+          {{item.date}}<br>
+          {{item.category}}<br>
+          <button ng-click='vm.updateCategoryTotals(item)' class='glyphicon glyphicon-remove'></button>
       </h3>
-        <button ng-click='vm.updateCategoryTotals(item)' class='btn btn-danger'>Delete</button>
+
      </div>
   </div>
 </div>
@@ -85,6 +85,7 @@
 <div class='col-md-4'>
 <div class='chart'></div>
 <h1 ng-if='vm.remain > 0'>Remaining Monthly Funds  {{vm.remain | currency}}</h1>
+
 
 </div>
 </div>

@@ -42,6 +42,14 @@ angular.module('projectFourApp')
           vm.user = response.data
         })
     }
+    function changeBudget() {
+      $http
+        .put('/api/users/' + vm.user._id, {budget: vm.budChange})
+        .then(function() {
+          vm.getUser()
+          console.log(vm.user.budget)
+        })
+    }
 
     function getPurchases() {
       $http
