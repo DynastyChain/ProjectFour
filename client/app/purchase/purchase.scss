@@ -1,10 +1,10 @@
 
 
 #purchaseBox {
-  height: 550px;
-  // width: 300px;
+
+  height: 250px;
   overflow-y: scroll;
-  background: -webkit-linear-gradient(right, blue, lightblue);
+  background: blue;
   border-radius: 10px;
   box-shadow: 10px 5px 5px gray;
 
@@ -20,15 +20,13 @@ form {
   border-radius: 10px;
   background: white;
 }
-.purch {
-  box-shadow: 10px 5px 5px teal;
-  border: 1px solid black;
-  border-radius: 10px;
-  background: white;
+table {
+  color: white;
+
 }
-.budgetBox {
-  height: 550px;
-  background: -webkit-linear-gradient(right, blue, lightblue);
+#budgetBox {
+  height: 250px;
+  background: blue;
   border-radius: 10px;
   box-shadow: 10px 5px 5px gray;
   color: white;
@@ -41,4 +39,7 @@ form {
 }
 .tabcontainer {
   float: left;
+}
+button {
+  color: red;
 }
