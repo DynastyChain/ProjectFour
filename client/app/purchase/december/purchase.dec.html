@@ -85,9 +85,16 @@
   </div>
 </form>
 </div>
+
 <div class='col-md-4'>
 <div class='chart'></div>
-<h1 ng-if='vm.remain > 0'>Remaining Monthly Funds  {{vm.remain | currency}}</h1>
+
+<form ng-submit='vm.changeBudget()'>
+<label>Enter your budget for this month</label>
+<input type='number' ng-model='vm.budChange' name='budChange' placeholder='enter amount'>
+<input type='submit'>
+</form>
+
 
 
 </div>

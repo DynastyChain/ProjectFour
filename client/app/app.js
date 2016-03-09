@@ -9,6 +9,7 @@ angular.module('projectFourApp', [
   'ngSanitize',
   'ui.router',
   'ui.bootstrap',
+  'LocalStorageModule',
   'validation.match'
 ])
   .config(function($urlRouterProvider, $locationProvider) {

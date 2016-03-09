@@ -10,7 +10,7 @@ var UserSchema = new Schema({
     type: String,
     lowercase: true
   },
-  budget: Number,
+  budget: String,
   role: {
     type: String,
     default: 'user'

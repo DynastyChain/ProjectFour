@@ -66,6 +66,14 @@ export function show(req, res, next) {
     .catch(err => next(err));
 }
 
+export function edit(req, res, next) {
+  var userId = req.user._id;
+
+  User.findById(userId)
+  .then(function(user) {
+    user.update({_id: userId},{ $set: {budget: req.body.budChange.amount}})
+  })
+}
 /**
  * Deletes a user
  * restriction: 'admin'

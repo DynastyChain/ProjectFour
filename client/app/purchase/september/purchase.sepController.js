@@ -2,13 +2,14 @@
 'use strict';
 
 angular.module('projectFourApp')
-  .controller('SepCtrl', function($http) {
+  .controller('SepCtrl', function($http, localStorageService) {
 
     var vm = this;
     vm.all = []
     vm.sorted = []
     vm.user = {}
     vm.newPurchase = {}
+    vm.budChange = 0
     vm.budget = 0;
     vm.category = ''
     vm.catTotals = [{
@@ -31,16 +32,20 @@ angular.module('projectFourApp')
     vm.addPurchase = addPurchase
     vm.deletePurchase = deletePurchase
     vm.buildChart = buildChart
-    vm.getUser = getUser
-    getUser();
+    vm.changeBudget = changeBudget
+    vm.getBudget = getBudget
+
+    getBudget();
     getPurchases();
 
-    function getUser() {
-      $http
-        .get('/api/users/me')
-        .then(function(response) {
-          vm.user = response.data
-        })
+    function getBudget() {
+      vm.budget = localStorageService.get('sepBudget');
+      return vm.budget
+    }
+    function changeBudget() {
+      localStorageService.remove('sepBudget')
+      localStorageService.set('sepBudget', vm.budChange);
+      vm.getBudget();
     }
 
     function getPurchases() {
@@ -50,7 +55,6 @@ angular.module('projectFourApp')
           if(vm.all !== response.data) {
             vm.all = response.data
             vm.sortPurchases(vm.all)
-            vm.budget = vm.user.budget
             vm.remain = (vm.budget - vm.month.total)
             vm.sorted.forEach(function(item) {
               vm.initialCategoryTotals(item)
@@ -145,12 +149,10 @@ angular.module('projectFourApp')
       vm.sorted.push(vm.newPurchase)
       vm.month.total += vm.newPurchase.amount
       vm.initialCategoryTotals(vm.newPurchase)
-      vm.remain = (vm.budget - vm.month.total)
       buildChart();
         $http
           .post('/api/purchases', vm.newPurchase)
         .then(function() {
-          vm.budget = vm.all[0].budget
         })
       vm.newPurchase = {};
    }

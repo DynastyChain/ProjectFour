@@ -2,13 +2,15 @@
 'use strict';
 
 angular.module('projectFourApp')
-  .controller('NovCtrl', function($http) {
+  .controller('NovCtrl', function($http, localStorageService) {
 
     var vm = this;
     vm.all = []
     vm.sorted = []
+    vm.user = {}
     vm.newPurchase = {}
-    vm.budget;
+    vm.budChange = 0
+    vm.budget = 0;
     vm.category = ''
     vm.catTotals = [{
       name: 'household', total: 0},
@@ -21,8 +23,7 @@ angular.module('projectFourApp')
      {name: 'misc', total: 0}
       ]
     vm.month = {name: 'november', total: 0}
-    vm.count = 2
-
+    vm.count = 1
     vm.initialCategoryTotals = initialCategoryTotals
     vm.updateCategoryTotals = updateCategoryTotals
     vm.getPurchases = getPurchases
@@ -31,17 +32,30 @@ angular.module('projectFourApp')
     vm.addPurchase = addPurchase
     vm.deletePurchase = deletePurchase
     vm.buildChart = buildChart
+    vm.changeBudget = changeBudget
+    vm.getBudget = getBudget
+
+    getBudget();
     getPurchases();
 
+    function getBudget() {
+      vm.budget = localStorageService.get('novBudget');
+      return vm.budget
+    }
+    function changeBudget() {
+      localStorageService.remove('novBudget')
+      localStorageService.set('novBudget', vm.budChange);
+      vm.getBudget();
+    }
 
     function getPurchases() {
       $http
-        .get('http://localhost:9000/api/purchases')
+        .get('/api/purchases')
         .then(function(response) {
           if(vm.all !== response.data) {
             vm.all = response.data
             vm.sortPurchases(vm.all)
-            vm.budget = vm.all[0].budget
+            vm.remain = (vm.budget - vm.month.total)
             vm.sorted.forEach(function(item) {
               vm.initialCategoryTotals(item)
             })
@@ -53,10 +67,12 @@ angular.module('projectFourApp')
     function sortPurchases(all) {
       all.forEach(function(item) {
         if(item.month === vm.month.name) {
+          // item.date = item.date.slice(0,15)
           vm.sorted.push(item)
+          item.date = item.date.slice(0,15)
           vm.month.total += item.amount
-
         }
+
       })
     }
 
@@ -135,16 +151,15 @@ angular.module('projectFourApp')
       vm.initialCategoryTotals(vm.newPurchase)
       buildChart();
         $http
-          .post('http://localhost:9000/api/purchases', vm.newPurchase)
+          .post('/api/purchases', vm.newPurchase)
         .then(function() {
         })
-      vm.budget = vm.all[0].budget
       vm.newPurchase = {};
    }
 
    function deletePurchase(purchase) {
     $http
-      .delete('http://localhost:9000/api/purchases/' + purchase._id)
+      .delete('/api/purchases/' + purchase._id)
       .then(function() {
         console.log(purchase)
       })
